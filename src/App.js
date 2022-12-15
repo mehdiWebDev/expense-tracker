@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './expenses.css';
 import Expenses from './components/expenses/Expenses';
 import ExpenseForm from './components/Expense-form/ExpenseForm';
 function App() {
