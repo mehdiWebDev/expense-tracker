@@ -1,32 +1,43 @@
 import './expense.css'
 import Expenseitem from '../Expense-item/ExpenseItem'
 import Card from '../shared/card/Card';
-const expenses = [
-    {
-      id: 'e1',
-      title: 'Toilet Paper',
-      amount: 94.12,
-      date: new Date(2020, 7, 14),
-    },
-    { id: 'e2', title: 'New TV', amount: 799.49, date: new Date(2021, 2, 12) },
-    {
-      id: 'e3',
-      title: 'Car Insurance',
-      amount: 294.67,
-      date: new Date(2021, 2, 28),
-    },
-    {
-      id: 'e4',
-      title: 'New Desk (Wooden)',
-      amount: 450,
-      date: new Date(2021, 5, 12),
-    },
-  ];
+import FilterByYear from '../FilterByYear/FilterByYear';
+import { useState } from 'react';
 
-const Expenses = ()=>{
+
+const Expenses = ({expenses})=>{
+
+  const [year,setYear] = useState(2020);
+
+  const handleChangeYear =(e)=>{
+    setYear(e.target.value)
+  }
+
+  console.log(expenses)
+  const filtredExpenses = expenses.filter(item => {
+    return item.date.getFullYear() === parseInt( year)
+  } )
+ 
     return (
         <Card className="expenses" >
-             <Expenseitem date={ expenses[0].date } amount={expenses[0].amount} title={ expenses[0].title }   />
+             <FilterByYear selected={year} handleChangeYear={handleChangeYear} />
+
+             {
+              
+              filtredExpenses.length === 0 ? 
+              (
+                <p style={{color:"red"}}> nothing </p>
+               ) : 
+
+               (
+                filtredExpenses.map(( f )=>{
+                  return <Expenseitem key={f.id} date={ f.date } amount={f.amount} title={ f.title }/>
+                 })
+               )
+             }
+
+
+              
         </Card>
     )
 }
