@@ -3,6 +3,7 @@ import Expenseitem from '../Expense-item/ExpenseItem'
 import Card from '../shared/card/Card';
 import FilterByYear from '../FilterByYear/FilterByYear';
 import { useState } from 'react';
+import ExpensesChart from '../ExpensesChart/ExpensesChart';
 
 
 const Expenses = ({expenses})=>{
@@ -13,7 +14,6 @@ const Expenses = ({expenses})=>{
     setYear(e.target.value)
   }
 
-  console.log(expenses)
   const filtredExpenses = expenses.filter(item => {
     return item.date.getFullYear() === parseInt( year)
   } )
@@ -22,11 +22,13 @@ const Expenses = ({expenses})=>{
         <Card className="expenses" >
              <FilterByYear selected={year} handleChangeYear={handleChangeYear} />
 
+             <ExpensesChart expenses={filtredExpenses} />
+
              {
               
               filtredExpenses.length === 0 ? 
               (
-                <p style={{color:"red"}}> nothing </p>
+                <p style={{color:"red"}}> Found no expenses  </p>
                ) : 
 
                (
